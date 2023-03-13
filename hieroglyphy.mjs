@@ -6,10 +6,13 @@ const asHexStr2 = asPaddedHexStr(2)
 const asHexStr4 = asPaddedHexStr(4)
 
 // Create the string representations of the primitive types
+const _true = "!+[]"
+const _false = "![]"
+
 const asStr = str => `${str}+[]`
+const str_true = asStr(_true)
+const str_false = asStr(_false)
 const str_NaN = asStr("+{}")
-const str_true = asStr("!+[]")
-const str_false = asStr("![]")
 const str_undefined = asStr("[][[]]")
 const str_object_Object = "[]+{}"
 
@@ -27,14 +30,14 @@ const _one = "+!![]"
 const numbers = [
   _zero,
   _one,
-  `${_one + _one}`,
-  `${_one + _one + _one}`,
-  `${_one + _one + _one + _one}`,
-  `${_one + _one + _one + _one + _one}`,
-  `${_one + _one + _one + _one + _one + _one}`,
-  `${_one + _one + _one + _one + _one + _one + _one}`,
-  `${_one + _one + _one + _one + _one + _one + _one + _one}`,
-  `${_one + _one + _one + _one + _one + _one + _one + _one + _one}`,
+  `${_true + _one}`,
+  `${_true + _one + _one}`,
+  `${_true + _one + _one + _one}`,
+  `${_true + _one + _one + _one + _one}`,
+  `${_true + _one + _one + _one + _one + _one}`,
+  `${_true + _one + _one + _one + _one + _one + _one}`,
+  `${_true + _one + _one + _one + _one + _one + _one + _one}`,
+  `${_true + _one + _one + _one + _one + _one + _one + _one + _one}`,
 ]
 
 // Load character encoding cache with values whose definitions become progressively weirder as we go on...
