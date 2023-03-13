@@ -29,7 +29,7 @@ const assert = {
 
 // Test encoding of 7-bit ASCII characters
 const test7BitAscii = () => {
-  for (let i = 0; i < 129; i += 1) {
+  for (let i = 0; i < 128; i += 1) {
     let c = String.fromCharCode(i)
     let encoded = hieroglyphyString(c)
     let evaled = eval(encoded)

@@ -7,6 +7,9 @@
         "hieroglyphy": "./bin/hieroglyphy"
     },
     "main": "./hieroglyphy.mjs",
+    "scripts": {
+        "test": "node ./test/node_test.mjs"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/alcuadrado/hieroglyphy"
