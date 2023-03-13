@@ -5,10 +5,10 @@ const asPaddedHexStr = len => n => n.toString(16).padStart(len, "0")
 const asHexStr2 = asPaddedHexStr(2)
 const asHexStr4 = asPaddedHexStr(4)
 
-// Create the string representations of the primitive types
 const _true = "!+[]"
 const _false = "![]"
 
+// Create the string representations of the primitive types
 const asStr = str => `${str}+[]`
 const str_true = asStr(_true)
 const str_false = asStr(_false)
