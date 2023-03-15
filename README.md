@@ -2,7 +2,7 @@
 
 The coding in this repo is a fork of [Hieroglyphy](https://github.com/alcuadrado/hieroglyphy) by [Patricio Palladino](https://github.com/alcuadrado/).
 
-This app is part the wider investigation into encoding a JavaScript statement or program using a reduced (or possibly minimal) alphabet while remaining executable.
+This app is part of the wider investigation into encoding a JavaScript statement or program using a reduced (or possibly minimal) alphabet while remaining executable.
 
 [Other variations](https://github.com/aemkei/jsfuck) of this style of app exist that use a minimal alphabet, but in this particular case, a close-to-minimal alphabet has been chosen in which every character in a JavaScript program is encoded using the following 8 characters:
 
