@@ -69,8 +69,8 @@ export const charCache = {
 }
 
 // Generate a string of encoded number primitives or characters concatenated from the supplied list of indices
-const concatNums = (...idxs) => idxs.map(idx => `(${numbers[idx]})`).join("+")
-const concatChars = (...idxs) => idxs.map(idx => charCache[idx]).join("+")
+export const concatNums = (...idxs) => idxs.map(idx => `(${numbers[idx]})`).join("+")
+export const concatChars = (...idxs) => idxs.map(idx => charCache[idx]).join("+")
 
 charCache["]"] = encodeFromObj(concatChars(1, 4))
 
@@ -79,7 +79,7 @@ const encConstructor = concatChars('c', 'o', 'n', 's', 't', 'r', 'u', 'c', 't', 
 const encodeFromStr = charInString(`${EMPTY_LIST}+${encodeFromObj(encConstructor)}`)
 
 charCache["S"] = encodeFromStr(numbers[9])
-charCache["g"] = encodeFromStr(concatNums(7, 7))
+charCache["g"] = encodeFromStr(toNum(concatChars(1, 4)))
 
 const encodeFrom1e100 = charInString(toStr(`+(${numbers[1]}+${concatChars('e', 1, 0, 0)})`))
 charCache["+"] = encodeFrom1e100(numbers[2])
@@ -89,18 +89,19 @@ charCache["I"] = encodeFromInfinity(numbers[0])
 charCache["y"] = encodeFromInfinity(numbers[7])
 
 // Use Number.prototype.toString(<number base>) to generate the remaining lowercase letters of the alphabet.
-// Both the number and the base must be specified as the sum of digits <= 9
+// The number must be specified as the sum of digits <= 9
 const encToString = concatChars('t', 'o', 'S', 't', 'r', 'i', 'n', 'g')
-charCache["h"] = `(${concatNums(9, 8)})[${encToString}](${concatNums(9, 9)})`
-charCache["k"] = `(${concatNums(9, 9, 2)})[${encToString}](${concatNums(9, 9, 3)})`
-charCache["m"] = `(${concatNums(9, 9, 4)})[${encToString}](${concatNums(9, 9, 5)})`
-charCache["p"] = `(${concatNums(9, 9, 7)})[${encToString}](${concatNums(9, 9, 8)})`
-charCache["q"] = `(${concatNums(9, 9, 8)})[${encToString}](${concatNums(9, 9, 9)})`
-charCache["v"] = `(${concatNums(9, 9, 9, 4)})[${encToString}](${concatNums(9, 9, 9, 5)})`
-charCache["w"] = `(${concatNums(9, 9, 9, 5)})[${encToString}](${concatNums(9, 9, 9, 6)})`
-charCache["x"] = `(${concatNums(9, 9, 9, 6)})[${encToString}](${concatNums(9, 9, 9, 7)})`
-charCache["y"] = `(${concatNums(9, 9, 9, 7)})[${encToString}](${concatNums(9, 9, 9, 8)})`
-charCache["z"] = `(${concatNums(9, 9, 9, 8)})[${encToString}](${concatNums(9, 9, 9, 9)})`
+const base36 = toNum(concatChars(3, 6))
+charCache["h"] = `(${concatNums(9, 8)})[${encToString}](${base36})`
+charCache["k"] = `(${concatNums(9, 9, 2)})[${encToString}](${base36})`
+charCache["m"] = `(${concatNums(9, 9, 4)})[${encToString}](${base36})`
+charCache["p"] = `(${concatNums(9, 9, 7)})[${encToString}](${base36})`
+charCache["q"] = `(${concatNums(9, 9, 8)})[${encToString}](${base36})`
+charCache["v"] = `(${concatNums(9, 9, 9, 4)})[${encToString}](${base36})`
+charCache["w"] = `(${concatNums(9, 9, 9, 5)})[${encToString}](${base36})`
+charCache["x"] = `(${concatNums(9, 9, 9, 6)})[${encToString}](${base36})`
+charCache["y"] = `(${concatNums(9, 9, 9, 7)})[${encToString}](${base36})`
+charCache["z"] = `(${concatNums(9, 9, 9, 8)})[${encToString}](${base36})`
 
 // Build the function constructor function so we can use of the native escape and unescape functions
 // []["sort"]["constructor"] -> [Function: Function]

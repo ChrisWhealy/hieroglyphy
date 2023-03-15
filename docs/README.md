@@ -1,11 +1,11 @@
 
 # How It Works
 
-The object of this exercise is to see if we can encode every character than might occur in a JavaScript program using a greatly reduced alphabet.
+The object of this exercise is to see if, by means of a greatly reduced alphabet, we can encode every character that might occur in a JavaScript program whilst remaining `eval`able and executable.
 
 ## The Encoding Alphabet
 
-Many alphabets could be chosen here of varying sizes, but just for fun, we're going to use only the following 8 characters:
+Many alphabets could be chosen here of varying sizes, but just for fun, we're going to restrict ourselves to the following 8 characters:
 
 * `+` to perform arithmetic addition, coerce values to numbers, and when overloaded, to perform string concatenation.
 * `!` to perform both Boolean negation and Boolean coercion.
@@ -13,17 +13,23 @@ Many alphabets could be chosen here of varying sizes, but just for fun, we're go
 * `(` and `)` to call functions and avoid parsing errors.
 * `{` and `}` to get `NaN` and the infamous string `[object Object]`
 
-***FYI:***<br>
-This 8-character alphabet is close to minimal in size.
-A minimal alphabet needs only 6 characters because it drops the use of curly braces `{}`.
+> ***FYI:***<br>
+> This 8-character alphabet is close to minimal in size.
+> A minimal alphabet can acheive the same result by dropping the use of curly braces `{}`.
+>
+> However, as the alphabet size drops, so the encoding length grows!
 
 ## Methodology
 
-Using the initial set of 8 characters `+!{}[]()`, we form the simplest JavaScript objects to which we apply various combinations of type coercion, Boolean negation and string concatenation.
-We then treat the returned values as strings and slice them up in order to retrieve the individual characters.
-Using these characters, we then construct new commands that give responses containing other letters &ndash; and so on until we have progressively built up the full range of numeric, alphabetic and graphic characters.
+Using the initial set of 8 characters `+!{}[]()`, we procede as follows:
 
-Once we are able to encode the full range of characters, we are then in a position to "hieroglyphy" an input string.
+* Form the simplest JavaScript objects
+* To these objects, apply various combinations of type coercion, Boolean negation and string concatenation
+* If they are not already character strings, coerce the returned values to strings
+* Slice up these strings to extract individual characters from which other commands can be constructed
+* Progressively build up a list of characters until every numeric, alphabetic and graphic character has been encoded
+
+Once we have a full range of encodes characters, we are then in a position to "hieroglyphy" an input string.
 The resulting (***very*** long) output can either be turned back into the original JavaScript code by running it through `eval`, or simply executed directly.
 
 # Table of Contents

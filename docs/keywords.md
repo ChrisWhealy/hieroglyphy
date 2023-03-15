@@ -78,7 +78,7 @@ If we attempt to coerce an empty object `{}` to a number, we get `NaN`, which ca
 (+{}+[])[+!![]]  // 'a'
 ```
 
-Although the encoding for `'a'` derived from `'false'[1]` is the same length as the encoding derived from `'NaN'[1]`, we'll use the `'NaN'` version as the string from which the character is being obtained is shorter.
+Although the encoding for `'a'` derived from `'false'[1]` is the same length as the encoding derived from `'NaN'[1]`, we'll use the `'NaN'` version as the string from which the character has been obtained is shorter.
 
 ## `[object Object]`
 

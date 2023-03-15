@@ -1,6 +1,7 @@
-# Pulling Ourselves Up By Our Bootstraps - The Basic Data Types
+# Pulling Ourselves Up By Our Bootstraps
+# Encoding The Basic Data Types
 
-Using only the characters in our minimal alphabet, we can immediately represent two basic JavaScript data types:
+Using only the characters in our close-to-minimal alphabet, we can immediately represent two basic JavaScript data types:
 
 * `[]` The empty list, and
 * `{}` The empty object

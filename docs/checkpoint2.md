@@ -1,4 +1,4 @@
-# Second Checkpoint
+# Character Cache: Second Checkpoint
 
 Now we have added quite a few extra letters to our encoding table:
 

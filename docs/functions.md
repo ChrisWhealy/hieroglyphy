@@ -10,7 +10,7 @@ This immediately means that certain functions will automatically be available, a
 
 ## The `toString` Number Base Trick
 
-The `Number.prototype.toString()` function can take a numeric argument in the range `2` to `36` that specifies the number base into which you'd like you number translated.
+The `Number.prototype.toString()` function can take a numeric argument in the range `2` to `36` that specifies the number base into which you'd like your number translated.
 
 For example, we can convert `17` to a variety of number bases like this:
 
@@ -39,14 +39,14 @@ However, as soon as we specify a number base greater than 10, any single digit g
 (17).toString(18)   // 'h'
 ```
 
-And presto!  Now that we can invoke `toString()` on a number, we just need ensure that the number being encoded and the number base are large enough to return the desired letter!
-This means that in base 36, 35 is `'z'`.
+And presto!  We now have a way of generating all the letters from `'a'` to `'z'` &mdash; of course, this assumes that we first start with sufficient letters to spell the word `'toString'`.
+When we invoke `toString(<number_base>)` on a number, we need ensure that the number base is large enough to return the desired letter!
 
-The only gotcha here is remembering that we are not going to encode `17` as the sum of 17 `true`s.
-Instead, we must encode a sequence of digits from 1 to 9 that add up to the desired number.
-So we encode `17` as `9 + 8`.
+For example, in base 36, 35 is `'z'`.
 
-This gotcha applies both to the number being transformed into a letter and the number base.
+The only gotcha here is remembering that the number number being encoded must be supplied as an integer.
+So, we must encode it as the sum of digits from `'1'` to `'9'` that add up to the desired number.
+So `17` is encoded as `9 + 8`.
 
 So using our helper functions `concatNums` and `concatChars`, the letter `'h'` is encoded like this:
 
@@ -56,10 +56,10 @@ const concatNums = (...idxs) => idxs.map(idx => `(${numbers[idx]})`).join("+")
 const concatChars = (...idxs) => idxs.map(idx => charCache[idx]).join("+")
 
 const enc_toString = concatChars('t', 'o', 'S', 't', 'r', 'i', 'n', 'g')
-charCache["h"] = `(${concatNums(9, 8)})[${enc_toString}](${concatNums(9, 9)})`
+const base36 = toNum(concatChars(3, 6))
+charCache["h"] = `(${concatNums(9, 8)})[${enc_toString}](${base36})`
 ```
 
-Where `concatNums(9, 8)` returns the encoding for `(9 + 8) = 17` and `concatNums(9, 9)` returns the encoding for `(9 + 9) = 18`.
 In other words, the above assignment translates to:
 
 ```javascript

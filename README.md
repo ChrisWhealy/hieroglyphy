@@ -1,8 +1,11 @@
-# Hieroglyphy - Taking JavaScript Type Coercion to Its Illogical Conclusion
+# Hieroglyphy
+# Taking JavaScript Type Coercion to Its Illogical Conclusion
 
-The coding in this repo is a fork of [Hieroglyphy](https://github.com/alcuadrado/hieroglyphy) by [Patricio Palladino](https://github.com/alcuadrado/).
+The coding in this repo is a rewrite of [Hieroglyphy](https://github.com/alcuadrado/hieroglyphy) by [Patricio Palladino](https://github.com/alcuadrado/).
 
-This app is part of the wider investigation into encoding a JavaScript statement or program using a reduced (or possibly minimal) alphabet while remaining executable.
+I have rewritten the original functionality as an ES6 module and significantly optimised it.
+
+This app is part of the wider investigation into encoding a JavaScript statement or program using a reduced (or possibly minimal) alphabet while still remaining `eval`able and executable.
 
 [Other variations](https://github.com/aemkei/jsfuck) of this style of app exist that use a minimal alphabet, but in this particular case, a close-to-minimal alphabet has been chosen in which every character in a JavaScript program is encoded using the following 8 characters:
 
@@ -12,10 +15,10 @@ This app is part of the wider investigation into encoding a JavaScript statement
 
 A JavaScript statement or program so encoded can be decoded using `eval`, or executed directly.
 
-***WARNING!***<br>
-When encoded using Hieroglyphy, a JavaScript program could easily swell in size to 3 orders of magnitude larger than the original!
-
-I have rewritten the original functionality as an ES6 module and significantly optimised it.
+> ***WARNING!***<br>
+> When encoded using Hieroglyphy, a JavaScript program could easily swell in size to 2 or 3 orders of magnitude larger than the original!
+>
+> Even after `gzip`ing the encoded script, it could still be 8 to 10 times larger than the original!
 
 ## Usage
 
