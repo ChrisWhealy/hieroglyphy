@@ -24,15 +24,15 @@ We then treat the returned values as strings and slice them up in order to retri
 Using these characters, we then construct new commands that give responses containing other letters &ndash; and so on until we have progressively built up the full range of numeric, alphabetic and graphic characters.
 
 Once we are able to encode the full range of characters, we are then in a position to "hieroglyphy" an input string.
-The resulting (***very*** long) output can be turned back into the original JavaScript code by running it through `eval` or simply executed directly.
+The resulting (***very*** long) output can either be turned back into the original JavaScript code by running it through `eval`, or simply executed directly.
 
 # Table of Contents
 
 * [Pulling Ourselves Up By Our Bootstraps](./bootstraps.md)
-* [String Conversion](./strings.md)
+* [Pulling Some Strings](./strings.md)
 * [What Have We Achieved So Far?](./checkpoint1.md)
 * [Extracting Characters From Keywords](./keywords.md)
-* [Tricks With Numbers](./numbers.md)
+* [Tricks With Big Numbers](./numbers.md)
 * [So Where Are We Now?](./checkpoint2.md)
 * [Tricks With Functions](./functions.md)
 

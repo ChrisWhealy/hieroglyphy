@@ -1,38 +1,123 @@
-# Gathering functions from available characters
+# Tricks With Functions
 
-By combining those characters, we can only get these JavaScript functions and type names: `call`, `concat`, `constructor`, `join`, `slice` and `sort`.
+Here, we will take advantage of the fact that a plain integer can also be treated as `Number` object.
+This immediately means that certain functions will automatically be available, and as long as we have encoded all the letters that make up that function's name, we can call it.
 
-Playing with our alphabet and these strings, we can get the following functions:
+```javascript
+(17).valueOf()
+17
+```
 
-`Function` from `[]["sort"]["constructor"]`<br>
-`Array` from `array["constructor"]`<br>
-`Boolean` from `false["constructor"]`<br>
-`Number` from `0["constructor"]`<br>
-`Object` from `{}["constructor"]`<br>
-`String` from `string["constructor"]`<br>
-`Function.prototype.call` from `f["call"]`<br>
-`String.prototype.concat` from `string["concat"]`<br>
-`Array.prototype.slice` from `array["slice"]`<br>
-`Array.prototype.join` from `array["join"]`<br>
-`Array.prototype.sort` from `array["sort"]`
+## The `toString` Number Base Trick
 
-Unluckily, none of these functions would give us new characters, but don’t loose your hope yet!
+The `Number.prototype.toString()` function can take a numeric argument in the range `2` to `36` that specifies the number base into which you'd like you number translated.
 
-One interesting function that becomes available is `unescape` which gives us all the ASCII characters by calling `unescape("%" + <HEX_ASCII_VALUE>)`.
+For example, we can convert `17` to a variety of number bases like this:
 
-All we're missing to get `unescape` is the `'p'` character.
-So once again we make a trade-off, sacrificing some more portability to get it.
-If we know that we are in a webpage served over HTTP or HTTPS we can assume that by casting window.location to string, and getting its third character we would obtain the precious `'p'`.
+```javascript
+(17).toString(2)    // '10001'
+(17).toString(3)    // '122'
+(17).toString(4)    // '101'
+(17).toString(5)    // '32'
+(17).toString(6)    // '25'
+(17).toString(7)    // '23'
+(17).toString(8)    // '21'
+(17).toString(9)    // '18'
+(17).toString(10)   // '17'
+```
 
-But how can we obtain the `window.location` object if we don’t have access to window yet?
-Luckily JavaScript, being so permissive, would give that object by doing this:
+However, as soon as we specify a number base greater than 10, any single digit greater than 10 but less than the base will be represented as letter of the alphabet:
 
+```javascript
+(17).toString(11)   // '16'
+(17).toString(12)   // '15'
+(17).toString(13)   // '14'
+(17).toString(14)   // '13'
+(17).toString(15)   // '12'
+(17).toString(16)   // '11'
+(17).toString(17)   // '10'
+(17).toString(18)   // 'h'
+```
 
-`Function("return location")()`
+And presto!  Now that we can invoke `toString()` on a number, we just need ensure that the number being encoded and the number base are large enough to return the desired letter!
+This means that in base 36, 35 is `'z'`.
 
-And with `location` now we can have three more characters `'h'`, `'p'`, `'/'`, `escape` and `unescape` functions!
+The only gotcha here is remembering that we are not going to encode `17` as the sum of 17 `true`s.
+Instead, we must encode a sequence of digits from 1 to 9 that add up to the desired number.
+So we encode `17` as `9 + 8`.
 
-If we could get the character `'%'` we would be able to get the rest by calling `unescape("%" + <HEX_ASCII_VALUE>)`.
-Luckily, escaping `'['` yields the string `'%5B'`, and from that, we can obtain the percentage sign.
+This gotcha applies both to the number being transformed into a letter and the number base.
 
-Finally, all we need to transform a script into symbols, is reading it as a string, encoding it in our alphabet, and use Function as eval.
+So using our helper functions `concatNums` and `concatChars`, the letter `'h'` is encoded like this:
+
+```javascript
+// Generate a string of encoded number primitives or characters concatenated from the supplied list of indices
+const concatNums = (...idxs) => idxs.map(idx => `(${numbers[idx]})`).join("+")
+const concatChars = (...idxs) => idxs.map(idx => charCache[idx]).join("+")
+
+const enc_toString = concatChars('t', 'o', 'S', 't', 'r', 'i', 'n', 'g')
+charCache["h"] = `(${concatNums(9, 8)})[${enc_toString}](${concatNums(9, 9)})`
+```
+
+Where `concatNums(9, 8)` returns the encoding for `(9 + 8) = 17` and `concatNums(9, 9)` returns the encoding for `(9 + 9) = 18`.
+In other words, the above assignment translates to:
+
+```javascript
+charCache["h"] = (17)["toString"](18)
+```
+
+We can now repeat this trick to fill in all the missing lowercase letters in our `charCache`.
+
+## Creating a Function Generator Function
+
+Here we need to take advantage of the fact that an empty array `[]` is, in fact, a built-in JavaScript object.
+This means it will have a known set of functions.
+
+So, this should look familiar:
+
+```javascript
+[3, 4, 2, 1].sort()  // [1, 2, 3, 4]
+```
+
+It should be no surprise to discover that calling an array's `sort()` function does exactly what it says on the tin &mdash; it returns a new array with the elements in their natural sort order.
+
+> ***Q***: Why did we choose the `sort` function?<br>
+> ***A:***: Because it has a short name, and we already know how to encode the letters `'s'`, `'o'`, `'r'` and `'t'`
+
+But what about this?
+
+```javascript
+[].sort              // What does this give?
+```
+
+By omitting the open/close parentheses `()` after the function name, we are no longer invoking the `sort` function; instead, what we get back is a reference to the `sort` function itself:
+
+```javascript
+[].sort              // [Function: sort]
+```
+
+And since functions are themselves objects, we can make further references to the known functions belonging to the `sort` function.
+For instance:
+
+```javascript
+[].sort.constructor  // [Function: Function]
+```
+
+This might look pretty obscure, but this is actually really powerful because what we now have a reference to the JavaScript function constructor.
+In other words, this is a function that can build other functions for us &mdash; all we need to supply is the source code for the new function.
+
+One restriction here is the fact that we must already have encoded sufficient letters to be able to spell the desired source code.
+
+In the event that we do not have an encoding for a particular 7-bit character, we can generate an `unescape` function, then pass that character's hex value to it and get back that actual character.
+
+```javascript
+// functionConstructor = []['sort']['constructor']
+const functionConstructor = `${EMPTY_LIST}[${concatChars('s', 'o', 'r', 't')}][${encConstructor}]`
+export const encodeScript = src => `${functionConstructor}(${encodeString(src)})()`
+
+// unescape = []['sort']['constructor']('return unescape')()
+// unescape = [Function: unescape]
+const unescape = encodeScript("return unescape")
+```
+
+If we encounter a Unicode character, then we must represent it using the hexadecimal form `\uXXXX`.

@@ -1,4 +1,4 @@
-# String Conversion
+# Pulling Some Strings
 
 If all the operands supplied to the plus `+` operator are either numeric or can safely be interpreted numbers, then `+` performs arithmetic addition as expected.
 Hence, these two statements are equivalent:
@@ -18,15 +18,15 @@ So `1 + '2' = '12'` and `'cat' + 3 = 'cat3'`
 
 How does this fact help us here?
 
-From the list of the natural numbers above, we can see that the encoded representation of integer `9` is 44 characters long, and this total will only grow larger as larger numbers are represented.
+From the list of the natural numbers above, we can see that the encoded representation of integer `9` is 44 characters long, and this total will only grow larger as we attempt to represent larger numbers.
 
-At the moment, we would have to represent `17` as the sum of seventeen `true`s:
+Using this naïve scheme of repeatedly adding one, the number `17` would be represented as the sum of seventeen `true`s &mdash; that's 84 characters (without any whitespace):
 
 ```javascript
 !![] + !![] + !![] + !![] + !![] + !![] + !![] + !![] + !![] + !![] + !![] + !![] + !![] + !![] + !![] + !![] + !![]   // 17
 ```
 
-However, if we convert integers `1` and `7` to strings and then concatenate, we will have a shorter representation.
+However, if we convert the digits of index `17` to the strings `'1'` and `'7'`, then encode these digits and concatenate, we will have a shorter representation.
 
 Given that our minimal alphabet consists only of the characters `+!(){}[]`, how do we coerce a value to a string?
 

@@ -5,7 +5,7 @@ Using only the characters in our minimal alphabet, we can immediately represent 
 * `[]` The empty list, and
 * `{}` The empty object
 
-By performing different sequences of type coercion one these simple values, we can derive the primitive Boolean values of `true` and `false`; from which we can then derive the integer values `0` and `1`.
+By performing different combinations of type coercion on these simple values, we can derive the primitive Boolean values of `true` and `false`; from which we can then derive the integer values `0` and `1`.
 
 ## Primitive Values
 

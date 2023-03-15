@@ -4,6 +4,16 @@ Now we have added quite a few extra letters to our encoding table:
 
 | Character | Derived from | Encoding
 |---|---|---
+| `'0'` | `(0).toString()`                                 | `+[]+[]`
+| `'1'` | `(1).toString()`                                 | `+!![]+[]`
+| `'2'` | `(1 + 1).toString()`                             | `!![]+!![]+[]`
+| `'3'` | `(1 + 1 + 1).toString()`                         | `!![]+!![]+!![]+[]`
+| `'4'` | `(1 + 1 + 1 + 1).toString()`                     | `!![]+!![]+!![]+!![]+[]`
+| `'5'` | `(1 + 1 + 1 + 1 + 1).toString()`                 | `!![]+!![]+!![]+!![]+!![]+[]`
+| `'6'` | `(1 + 1 + 1 + 1 + 1 + 1).toString()`             | `!![]+!![]+!![]+!![]+!![]+!![]+[]`
+| `'7'` | `(1 + 1 + 1 + 1 + 1 + 1 + 1).toString()`         | `!![]+!![]+!![]+!![]+!![]+!![]+!![]+[]`
+| `'8'` | `(1 + 1 + 1 + 1 + 1 + 1 + 1 + 1).toString()`     | `!![]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+[]`
+| `'9'` | `(1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1).toString()` | `!![]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+[]`
 | `'+'` | `'1e+100'[2]`           | `(+(+!![]+(!![]+[])[+!![]+!![]+!![]]+(+!![])+(+[])+(+[]))+[])[!![]+!![]]`
 | `'['` | `'[object Object]'[0]`  | `([]+{}+[])[+[]]`
 | `']'` | `'[object Object]'[14]` | `({}+[])[+((+!![]+[])+(!![]+!![]+!![]+!![]+[]))]`
@@ -27,4 +37,4 @@ Now we have added quite a few extra letters to our encoding table:
 | `'u'` | `'undefined'[0]`        | `([][+[]]+[])[+[]]`
 | `'y'` | `'Infinity'[7]`         | `(+(+!![]+(!![]+[])[+!![]+!![]+!![]]+(+!![])+(+[])+(+[])+(+[]))+[])[!![]+!![]+!![]+!![]+!![]+!![]+!![]]`
 
-That's a pretty good list, but we're still a long way off a complete alphabet, let alone all the graphics symbols.
+That's a pretty good list, but we're still a long way off a complete alphabet, let alone any of the graphics symbols.

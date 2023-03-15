@@ -2,14 +2,16 @@
 
 Now that we have both the integers and their string representations, we can start to derive the encoding for some alphabetic characters:
 
+## `undefined`
+
 ***Q:*** What does JavaScript return if you access a non-existent array element?<br>
 ***A:*** `undefined`
 
-Using our minimal alphabet, we can obtain the keyword `undefined` by accessing element `0` of an empty array: `[][0]`.
+Using our close-to-minimal alphabet, we can obtain the keyword `undefined` by accessing element `0` of an empty array: `[][0]`.
 
-Further to this, we know that integer `0` is `+[]`, so we can get `undefined` from `[][+[]]`.
+Further to this, we know that integer `0` can be encoded as `+[]`, so we can get `undefined` from `[][+[]]`.
 
-If we now perform the same string conversion trick as above, we can extract the letters from the character string `'undefined'`:
+If we now concatenate this value to an empty list, we can convert the reserved word into the string `'undefined'`, from which we can then extract the individual letters:
 
 ```javascript
 // Access element zero of an empty array
@@ -40,11 +42,13 @@ So we need to substitute each integer for its encoded representation:
 ([][+[]]+[])[!![]+!![]+!![]+!![]+!![]]   // 'undefined[5]' -> 'i'
 ```
 
+## Booleans
+
 Let's now repeat the same trick, but this time, extract the characters from the values `true`, `false`, `NaN` and `[object Object]`.
 
 ```javascript
-![]                              //  false
-![]+[]                           // 'false'
+![]                              // Reserved word false
+![]+[]                           // String 'false'
 
 (![]+[])[+[]]                    // 'false'[0] = 'f'
 (![]+[])[+!![]]                  // 'false'[1] = 'a'
@@ -52,8 +56,8 @@ Let's now repeat the same trick, but this time, extract the characters from the 
 (![]+[])[+!![]+!![]+!![]]        // 'false'[3] = 's'
 (![]+[])[+!![]+!![]+!![]+!![]]   // 'false'[4] = 'e'
 
-!![]                             //  true
-!![]+[]                          // 'true'
+!![]                             // Reserved word true
+!![]+[]                          // String 'true'
 
 (!![]+[])[+[]]                   // 'true'[0] = 't'
 (!![]+[])[+!![]]                 // 'true'[1] = 'r'
@@ -62,6 +66,8 @@ Let's now repeat the same trick, but this time, extract the characters from the 
 ```
 
 In cases where we have multiple ways to encode the same character (so far, we have three ways to encode the letter `'e'`), the shortest encoding will be used.
+
+## Not a Number `NaN`
 
 If we attempt to coerce an empty object `{}` to a number, we get `NaN`, which can then be converted to a string, placed in parentheses and chopped up to give us encodings for the letters `'N'` and `'a'`:
 
@@ -73,6 +79,8 @@ If we attempt to coerce an empty object `{}` to a number, we get `NaN`, which ca
 ```
 
 Although the encoding for `'a'` derived from `'false'[1]` is the same length as the encoding derived from `'NaN'[1]`, we'll use the `'NaN'` version as the string from which the character is being obtained is shorter.
+
+## `[object Object]`
 
 ```javascript
 []+{}                                                 //  [object Object]
