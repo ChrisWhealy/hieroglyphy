@@ -11,7 +11,7 @@ true + 2 = 3
 However, if plus `+` is passed any non-numeric operands, then the operator is said to be "overloaded" and its behaviour switches from arithmetic addition to string concatenation.
 The reason for this switch of behaviour is that JavaScript must perform type conversion that is guaranteed never to fail:
 
-* It it potentially unsafe to assume that a string represents a number &mdash; after all, what is the numeric value of `'cat'`?
+* It is potentially unsafe to assume that a string represents a number &mdash; after all, what is the numeric value of `'cat'`?
 * It is always safe to assume that a number can be represented a string
 
 So `1 + '2' = '12'` and `'cat' + 3 = 'cat3'`

@@ -26,7 +26,7 @@ For example, we can convert `17` to a variety of number bases like this:
 (17).toString(10)   // '17'
 ```
 
-However, as soon as we specify a number base greater than 10, any single digit greater than 10 but less than the base will be represented as letter of the alphabet:
+However, as soon as we specify a number base greater than 10, any single digit greater than 9 but less than the base will be represented as letter of the alphabet:
 
 ```javascript
 (17).toString(11)   // '16'
@@ -44,7 +44,7 @@ When we invoke `toString(<number_base>)` on a number, we need ensure that the nu
 
 For example, in base 36, 35 is `'z'`.
 
-The only gotcha here is remembering that the number number being encoded must be supplied as an integer.
+The only gotcha here is remembering that the number being encoded must be supplied as an integer.
 So, we must encode it as the sum of digits from `'1'` to `'9'` that add up to the desired number.
 So `17` is encoded as `9 + 8`.
 
@@ -66,12 +66,11 @@ In other words, the above assignment translates to:
 charCache["h"] = (17)["toString"](18)
 ```
 
-We can now repeat this trick to fill in all the missing lowercase letters in our `charCache`.
+We can now repeat this trick as many times as needed to fill in the missing lowercase letters in our `charCache`.
 
 ## Creating a Function Generator Function
 
-Here we need to take advantage of the fact that an empty array `[]` is, in fact, a built-in JavaScript object.
-This means it will have a known set of functions.
+Here we need to take advantage of the fact that an empty array `[]` is a built-in JavaScript object with a known set of built-in functions.
 
 So, this should look familiar:
 
@@ -81,8 +80,8 @@ So, this should look familiar:
 
 It should be no surprise to discover that calling an array's `sort()` function does exactly what it says on the tin &mdash; it returns a new array with the elements in their natural sort order.
 
-> ***Q***: Why did we choose the `sort` function?<br>
-> ***A:***: Because it has a short name, and we already know how to encode the letters `'s'`, `'o'`, `'r'` and `'t'`
+> ***Q:*** Why did we choose the `sort` function?<br>
+> ***A:*** Because it has a short name, and we already have already encoded the letters `'s'`, `'o'`, `'r'` and `'t'`
 
 But what about this?
 
@@ -103,12 +102,12 @@ For instance:
 [].sort.constructor  // [Function: Function]
 ```
 
-This might look pretty obscure, but this is actually really powerful because what we now have a reference to the JavaScript function constructor.
+This might look pretty obscure, but this is actually really powerful because what we now have is a reference to the JavaScript function constructor.
 In other words, this is a function that can build other functions for us &mdash; all we need to supply is the source code for the new function.
 
-One restriction here is the fact that we must already have encoded sufficient letters to be able to spell the desired source code.
+One restriction here is the fact that we must already have encoded sufficient letters to be able to spell the words in the desired source code!
 
-In the event that we do not have an encoding for a particular 7-bit character, we can generate an `unescape` function, then pass that character's hex value to it and get back that actual character.
+In the event that we are unable to derive a particular 7-bit character from some returned keyword or string, we can generate an `unescape` function, to which we pass an encoded representation of that character's hex value.
 
 ```javascript
 // functionConstructor = []['sort']['constructor']

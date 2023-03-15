@@ -16,9 +16,9 @@ This app is part of the wider investigation into encoding a JavaScript statement
 A JavaScript statement or program so encoded can be decoded using `eval`, or executed directly.
 
 > ***WARNING!***<br>
-> When encoded using Hieroglyphy, a JavaScript program could easily swell in size to 2 or 3 orders of magnitude larger than the original!
+> When encoded using Hieroglyphy, a JavaScript program could become 2 or 3 orders of magnitude larger than the original!
 >
-> Even after `gzip`ing the encoded script, it could still be 8 to 10 times larger than the original!
+> Even after `gzip`ing the "hieroglyphied" script, it could still be 8 to 10 times larger than the original!
 
 ## Usage
 

@@ -69,8 +69,8 @@ export const charCache = {
 }
 
 // Generate a string of encoded number primitives or characters concatenated from the supplied list of indices
-export const concatNums = (...idxs) => idxs.map(idx => `(${numbers[idx]})`).join("+")
-export const concatChars = (...idxs) => idxs.map(idx => charCache[idx]).join("+")
+const concatNums = (...idxs) => idxs.map(idx => `(${numbers[idx]})`).join("+")
+const concatChars = (...idxs) => idxs.map(idx => charCache[idx]).join("+")
 
 charCache["]"] = encodeFromObj(concatChars(1, 4))
 

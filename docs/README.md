@@ -29,7 +29,7 @@ Using the initial set of 8 characters `+!{}[]()`, we procede as follows:
 * Slice up these strings to extract individual characters from which other commands can be constructed
 * Progressively build up a list of characters until every numeric, alphabetic and graphic character has been encoded
 
-Once we have a full range of encodes characters, we are then in a position to "hieroglyphy" an input string.
+Once we have a full range of encoded characters, we are then in a position to "hieroglyphy" an input string.
 The resulting (***very*** long) output can either be turned back into the original JavaScript code by running it through `eval`, or simply executed directly.
 
 # Table of Contents
