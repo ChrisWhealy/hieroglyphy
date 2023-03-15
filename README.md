@@ -29,7 +29,7 @@ import {
 } from "./hieroglyphy.mjs"
 ```
 
-You can also perform simple tests in the NodeJS REPL (where `node --version` is >=18):
+You can also perform simple tests in the NodeJS REPL (where `node --version` is >= 18):
 
 ```bash
 $ node
