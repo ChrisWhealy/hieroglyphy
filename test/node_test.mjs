@@ -1,7 +1,7 @@
 import {
-  hieroglyphyScript,
-  hieroglyphyString,
-  hieroglyphyNumber,
+  encodeScript,
+  encodeString,
+  encodeNumber,
 } from "../hieroglyphy.mjs"
 
 global.testString = "foo"
@@ -28,10 +28,10 @@ const assert = {
 }
 
 // Test encoding of 7-bit ASCII characters
-const test7BitAscii = () => {
+const test7BitAsciiEncoding = () => {
   for (let i = 0; i < 128; i += 1) {
     let c = String.fromCharCode(i)
-    let encoded = hieroglyphyString(c)
+    let encoded = encodeString(c)
     let evaled = eval(encoded)
 
     assert.coercesTo(c, evaled)
@@ -40,9 +40,9 @@ const test7BitAscii = () => {
 }
 
 // Test encoding of numbers
-const testHieroglyphyNumbers = () => {
+const testNumberEncoding = () => {
   for (let i = 0; i < 1000; i += 1) {
-    let encoded = hieroglyphyNumber(i)
+    let encoded = encodeNumber(i)
     let evaled = eval(encoded)
 
     assert.exactlyEquals(i, evaled)
@@ -51,12 +51,12 @@ const testHieroglyphyNumbers = () => {
 }
 
 // Test a script containing Unicode characters
-const testHieroglyphyScript = () => {
+const testScriptEncoding = () => {
   // A script doing something (with some unicode)
   let script = "global.testString = \"bαr\""
 
   assert.exactlyEquals(global.testString, "foo")
-  eval(hieroglyphyScript(script))
+  eval(encodeScript(script))
   assert.exactlyEquals(global.testString, "bαr")
 }
 
@@ -65,13 +65,13 @@ let testCount = 0
 
 try {
   testCount++
-  test7BitAscii()
+  test7BitAsciiEncoding()
 
   testCount++
-  testHieroglyphyNumbers()
+  testNumberEncoding()
 
   testCount++
-  testHieroglyphyScript()
+  testScriptEncoding()
 
   console.log(`✅ ${testCount} of ${testTotal} ran successfully`)
 } catch (err) {
