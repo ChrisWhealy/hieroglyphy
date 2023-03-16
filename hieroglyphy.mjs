@@ -3,15 +3,18 @@ const EMPTY_OBJ = "{}"
 
 const NOT = val => `!${val}`
 const toNum = val => `+${val}`
+const toEnclosedNum = val => `+(${val})`
 
-// Start by using JavaScript type coercion to generate the encoded representation of primitive values
-const _FALSE = NOT(EMPTY_LIST)    // An empty list coerced to a Boolean is false
-const _TRUE = NOT(_FALSE)         // True is NOT false (duh...)
-const _ZERO = toNum(EMPTY_LIST)   // Zero is an empty list coerced to a number
-const _ONE = toNum(_TRUE)         // One is true coerced to a number
-const _NaN = toNum(EMPTY_OBJ)     // NaN is an empty object coerced to a number (of course...)
+// Use type coercion to transform basic entities into primitive values false, 0 and Nan
+const _FALSE = NOT(EMPTY_LIST)    // ![] -> false
+const _ZERO = toNum(EMPTY_LIST)   // +[] -> 0
+const _NaN = toNum(EMPTY_OBJ)     // +{} -> NaN (but you knew that of course...)
 
-// Next, generate the string encoding of the primitive types
+// From false, derive true and 1
+const _TRUE = NOT(_FALSE)         // !![]  -> true
+const _ONE = toNum(_TRUE)         // +!![] -> 1
+
+// By concatenating an empty list, we get the sting representation of the primitive values
 const toStr = val => `${val}${_ZERO}`
 const str_true = toStr(_TRUE)
 const str_false = toStr(_FALSE)
@@ -19,7 +22,7 @@ const str_NaN = toStr(_NaN)
 const str_undefined = toStr(`${EMPTY_LIST}[${_ZERO}]`)
 const str_object_Object = `${EMPTY_LIST}${_NaN}`
 
-// Extract individual ASCII characters at a particular index within a string
+// Extract a character at a particular index within a string
 const charInString = str => idx => `(${str})[${idx}]`
 const encodeFromObj = charInString(str_object_Object)
 const encodeFromNaN = charInString(str_NaN)
@@ -68,8 +71,7 @@ export const charCache = {
   "u": encodeFromUndefined(numbers[0]),
 }
 
-// Generate a string of encoded number primitives or characters concatenated from the supplied list of indices
-const concatNums = (...idxs) => idxs.map(idx => `(${numbers[idx]})`).join("+")
+// Generate a concatenated string of encoded characters from the supplied list of indices
 const concatChars = (...idxs) => idxs.map(idx => charCache[idx]).join("+")
 
 charCache["]"] = encodeFromObj(concatChars(1, 4))
@@ -79,7 +81,7 @@ const encConstructor = concatChars('c', 'o', 'n', 's', 't', 'r', 'u', 'c', 't', 
 const encodeFromStr = charInString(`${EMPTY_LIST}+${encodeFromObj(encConstructor)}`)
 
 charCache["S"] = encodeFromStr(numbers[9])
-charCache["g"] = encodeFromStr(toNum(concatChars(1, 4)))
+charCache["g"] = encodeFromStr(toEnclosedNum(concatChars(1, 4)))
 
 const encodeFrom1e100 = charInString(toStr(`+(${numbers[1]}+${concatChars('e', 1, 0, 0)})`))
 charCache["+"] = encodeFrom1e100(numbers[2])
@@ -91,26 +93,26 @@ charCache["y"] = encodeFromInfinity(numbers[7])
 // Use Number.prototype.toString(<number base>) to generate the remaining lowercase letters of the alphabet.
 // The number must be specified as the sum of digits <= 9
 const encToString = concatChars('t', 'o', 'S', 't', 'r', 'i', 'n', 'g')
-const base36 = toNum(concatChars(3, 6))
-charCache["h"] = `(${concatNums(9, 8)})[${encToString}](${base36})`
-charCache["k"] = `(${concatNums(9, 9, 2)})[${encToString}](${base36})`
-charCache["m"] = `(${concatNums(9, 9, 4)})[${encToString}](${base36})`
-charCache["p"] = `(${concatNums(9, 9, 7)})[${encToString}](${base36})`
-charCache["q"] = `(${concatNums(9, 9, 8)})[${encToString}](${base36})`
-charCache["v"] = `(${concatNums(9, 9, 9, 4)})[${encToString}](${base36})`
-charCache["w"] = `(${concatNums(9, 9, 9, 5)})[${encToString}](${base36})`
-charCache["x"] = `(${concatNums(9, 9, 9, 6)})[${encToString}](${base36})`
-charCache["y"] = `(${concatNums(9, 9, 9, 7)})[${encToString}](${base36})`
-charCache["z"] = `(${concatNums(9, 9, 9, 8)})[${encToString}](${base36})`
+const base36 = toEnclosedNum(concatChars(3, 6))
+charCache["h"] = `(${toEnclosedNum(concatChars(1, 7))})[${encToString}](${base36})`
+charCache["k"] = `(${toEnclosedNum(concatChars(2, 0))})[${encToString}](${base36})`
+charCache["m"] = `(${toEnclosedNum(concatChars(2, 2))})[${encToString}](${base36})`
+charCache["p"] = `(${toEnclosedNum(concatChars(2, 5))})[${encToString}](${base36})`
+charCache["q"] = `(${toEnclosedNum(concatChars(2, 6))})[${encToString}](${base36})`
+charCache["v"] = `(${toEnclosedNum(concatChars(3, 1))})[${encToString}](${base36})`
+charCache["w"] = `(${toEnclosedNum(concatChars(3, 2))})[${encToString}](${base36})`
+charCache["x"] = `(${toEnclosedNum(concatChars(3, 3))})[${encToString}](${base36})`
+charCache["y"] = `(${toEnclosedNum(concatChars(3, 4))})[${encToString}](${base36})`
+charCache["z"] = `(${toEnclosedNum(concatChars(3, 5))})[${encToString}](${base36})`
 
-// Build the function constructor function so we can use of the native escape and unescape functions
+// Build the function constructor function so we can call the native escape and unescape functions
 // []["sort"]["constructor"] -> [Function: Function]
 const functionConstructor = `${EMPTY_LIST}[${concatChars('s', 'o', 'r', 't')}][${encConstructor}]`
 export const encodeScript = src => `${functionConstructor}(${encodeString(src)})()`
 
 const unescape = encodeScript("return unescape")
 
-// escape('[') -> '%5B' from which we can extract the '%' character
+// escape('[') -> '%5B' from which we can extract the percent character
 charCache["%"] = `${encodeScript("return escape")}${charInString(charCache["["])(numbers[0])}`
 
 const encodeChar = char =>
