@@ -1,5 +1,4 @@
-# Hieroglyphy
-# Taking JavaScript Type Coercion to Its Illogical Conclusion
+# Hieroglyphy: Taking JavaScript Type Coercion to Its Illogical Conclusion
 
 The coding in this repo is a rewrite of [Hieroglyphy](https://github.com/alcuadrado/hieroglyphy) by [Patricio Palladino](https://github.com/alcuadrado/).
 
