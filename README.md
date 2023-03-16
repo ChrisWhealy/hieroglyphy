@@ -38,21 +38,21 @@ You can also perform simple tests in the NodeJS REPL (where `node --version` is 
 $ node
 Welcome to Node.js v18.14.2.
 Type ".help" for more information.
-> let hieroglyphy = await import('./hieroglyphy.mjs')
+> let H = await import('./hieroglyphy.mjs')
 undefined
-> hieroglyphy.encodeNumber("1")
+> H.encodeNumber("1")
 '+!![]'
-> eval(hieroglyphy.encodeNumber("99"))
+> eval(H.encodeNumber("99"))
 99
-> hieroglyphy.encodeString("a")
+> H.encodeString("a")
 '(+{}+[])[+!![]]'
-> hieroglyphy.encodeString("b")
+> H.encodeString("b")
 '([]+{})[!![]+!![]]'
-> hieroglyphy.encodeString("c")
+> H.encodeString("c")
 '([]+{})[!![]+!![]+!![]+!![]+!![]]'
-> hieroglyphy.encodeString("abc")
+> H.encodeString("abc")
 '(+{}+[])[+!![]]+([]+{})[!![]+!![]]+([]+{})[!![]+!![]+!![]+!![]+!![]]'
-> eval(hieroglyphy.encodeString("abc"))
+> eval(H.encodeString("abc"))
 'abc'
 >
 ```
