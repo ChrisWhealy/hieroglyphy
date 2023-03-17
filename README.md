@@ -58,4 +58,4 @@ undefined
 
 # How It Works
 
-The functionality behind how this app works is described [here](./docs/README.md)
+The functionality of this app is described [in this blog](https://awesome.red-badger.com/chriswhealy/hieroglyphy)
