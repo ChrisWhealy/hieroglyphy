@@ -74,8 +74,8 @@ If we attempt to coerce an empty object `{}` to a number, we get `NaN`, which ca
 ```javascript
 +{}              //  NaN
 +{}+[]           // 'NaN'
-(+{}+[])[+[]]    // 'N'
-(+{}+[])[+!![]]  // 'a'
+(+{}+[])[+[]]    // 'NaN'[0] -> 'N'
+(+{}+[])[+!![]]  // 'NaN'[1] -> 'a'
 ```
 
 Although the encoding for `'a'` derived from `'false'[1]` is the same length as the encoding derived from `'NaN'[1]`, we'll use the `'NaN'` version as the string from which the character has been obtained is shorter.
@@ -97,7 +97,7 @@ Although the encoding for `'a'` derived from `'false'[1]` is the same length as 
 // index is built by concatenating '1' and '4' then coercing the string to an integer
            +!![]+[]                                   // '1'
                         !![]+!![]+!![]+!![]+[]        // '4'
-          (+!![]+[]) + (!![]+!![]+!![]+!![]+[])       // '1' + '4'
-        +((+!![]+[]) + (!![]+!![]+!![]+!![]+[]))      // +'14' -> 14
+          (+!![]+[]) + (!![]+!![]+!![]+!![]+[])       // '1' + '4' -> '14'
+        +((+!![]+[]) + (!![]+!![]+!![]+!![]+[]))      // +('14') -> 14
 ({}+[])[+((+!![]+[]) + (!![]+!![]+!![]+!![]+[]))]     // '[object Object]'[14] -> ']'
 ```
