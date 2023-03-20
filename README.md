@@ -6,7 +6,7 @@ I have rewritten the original functionality as an ES6 module and significantly o
 
 This app is part of the wider investigation into encoding a JavaScript statement or program using a reduced (or possibly minimal) alphabet while still remaining `eval`able and executable.
 
-[Other variations](https://github.com/aemkei/jsfuck) of this style of app exist that use a minimal alphabet, but in this particular case, a close-to-minimal alphabet has been chosen in which every character in a JavaScript program is encoded using the following 8 characters:
+[Other variations](https://github.com/aemkei/jsfuck) of this style of app exist that use a minimal alphabet, but in this particular case, a close-to-minimal alphabet has been chosen in which every character in a JavaScript program is encoded using some combination of the following 8 characters:
 
 * The three bracket pairs `[]`, `{}` and `()`,
 * The plus sign `+`, and
@@ -14,8 +14,13 @@ This app is part of the wider investigation into encoding a JavaScript statement
 
 A JavaScript statement or program so encoded can be decoded using `eval`, or executed directly.
 
+This form of encoding was originally considered a potential attack vector for malicious code; however, given the fact that the encoded representation can always by turned back into the original JavaScript by means of a simple `eval`, this approach is unlikely to be effective against modern security software.
+
 > ***WARNING!***<br>
-> When encoded using Hieroglyphy, a JavaScript program could become 2 or 3 orders of magnitude larger than the original!
+> When encoded using Hieroglyphy, a JavaScript program becomes:
+>
+> 1. Entire unreadable to us humans
+> 1. Inflated in size by 2 or 3 orders of magnitude!
 >
 > Even after `gzip`ing the "hieroglyphied" script, it could still be 8 to 10 times larger than the original!
 
