@@ -17,10 +17,10 @@ A JavaScript statement or program so encoded can be decoded using `eval`, or exe
 This form of encoding was originally considered a potential attack vector for malicious code; however, given the fact that the encoded representation can always by turned back into the original JavaScript by means of a simple `eval`, this approach is unlikely to be effective against modern security software.
 
 > ***WARNING!***<br>
-> When encoded using Hieroglyphy, a JavaScript program becomes:
+> When encoded using Hieroglyphy, a JavaScript program:
 >
-> 1. Entire unreadable to us humans
-> 1. Inflated in size by 2 or 3 orders of magnitude!
+> 1. Becomes entirely incomprehensible to humans
+> 1. Swells in size by 2 or 3 orders of magnitude!
 >
 > Even after `gzip`ing the "hieroglyphied" script, it could still be 8 to 10 times larger than the original!
 
