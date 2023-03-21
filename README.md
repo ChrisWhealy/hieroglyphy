@@ -24,6 +24,11 @@ This form of encoding was originally considered a potential attack vector for ma
 >
 > Even after `gzip`ing the "hieroglyphied" script, it could still be 8 to 10 times larger than the original!
 
+## Optional Number Encoding
+
+By changing the constant `ENCODE_NUMBERS` from `true` to `false`, you can elect to allow the digit characters `['0'..'9']` to be included in the encoding alphabet.
+This will reduce the size of the encoded by approximately 40%.
+
 ## Usage
 
 `hieroglyphy.mjs` is a standalone module that can be included in your larger project.

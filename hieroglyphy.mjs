@@ -1,4 +1,4 @@
-// By switching off number ecoding, we allow the digit characters ['0'..'9'] to be included in our encoding alphabet,
+// By switching off number encoding, we allow the digit characters ['0'..'9'] to be included in our encoding alphabet,
 // and this reduce the encoded output size by approximately 40%
 const ENCODE_NUMBERS = true
 
