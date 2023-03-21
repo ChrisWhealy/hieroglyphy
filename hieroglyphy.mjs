@@ -1,48 +1,53 @@
-const EMPTY_LIST = "[]"
-const EMPTY_OBJ = "{}"
+// By switching off number ecoding, we allow the digit characters ['0'..'9'] to be included in our encoding alphabet,
+// and this reduce the encoded output size by approximately 40%
+const ENCODE_NUMBERS = true
 
 const NOT = val => `!${val}`
 const asNum = val => `+${val}`
-const toNum = val => `+(${val})`
+const toNum = v => ENCODE_NUMBERS ? `+(${v})` : +eval(v)
 
-const _FALSE = NOT(EMPTY_LIST)    // ![]   -> false
-const _ZERO = asNum(EMPTY_LIST)   // +[]   -> 0
-const _NaN = asNum(EMPTY_OBJ)     // +{}   -> NaN (but you knew that of course...)
-const _TRUE = NOT(_FALSE)         // !![]  -> true
-const _ONE = asNum(_TRUE)         // +!![] -> 1
+const EMPTY_LIST = "[]"
+const EMPTY_OBJ = "{}"
 
-const toStr = val => `${val}+[]`  // val + [] -> 'val'
+const _FALSE = NOT(EMPTY_LIST)                          // ![]   -> false
+const _TRUE = NOT(_FALSE)                               // !![]  -> true
+const _ZERO = ENCODE_NUMBERS ? asNum(EMPTY_LIST) : '0'  // +[]   -> 0
+const _ONE = ENCODE_NUMBERS ? asNum(_TRUE) : '1'        // +!![] -> 1
+const _NaN = asNum(EMPTY_OBJ)                           // +{}   -> NaN (but you knew that of course...)
+
+const toStr = val => `${val}+${EMPTY_LIST}`             // val + [] -> 'val'
 const strTrue = toStr(_TRUE)
 const strFalse = toStr(_FALSE)
 const strNaN = toStr(_NaN)
-const strUndefined = toStr(`${EMPTY_LIST}[${_ZERO}]`)  // [][+[]] -> undefined
-const strObject = `${EMPTY_LIST}${_NaN}`               // []+{}   -> [object Object]
+const strUndefined = toStr(`${EMPTY_LIST}[${_ZERO}]`)   // [][+[]] -> undefined
+const strObject = `${EMPTY_LIST}${_NaN}`                // []+{}   -> [object Object]
 
-const charInString = str => idx => `(${str})[${idx}]`  // (string)[idx] -> 'char'
+const charInString = str => idx => `(${str})[${idx}]`   // (string)[idx] -> 'char'
 const extractCharFromObj = charInString(strObject)
 const extractCharFromNaN = charInString(strNaN)
 const extractCharFromUndefined = charInString(strUndefined)
 const extractCharFromTrue = charInString(strTrue)
 const extractCharFromFalse = charInString(strFalse)
 
-// Starting with [_ZERO, _ONE], generate the numbers 2 to 9 by concatenating _TRUE with n+1 copies of _ONE
-const numbers = [...new Array(8)]
-  .reduce((acc, _, n) => (_ => acc)(acc.push(`${_TRUE + _ONE.repeat(n + 1)}`)), [_ZERO, _ONE])
+const numbers =
+  ENCODE_NUMBERS
+    ? [...new Array(8)].reduce((acc, _, n) => (_ => acc)(acc.push(`${_TRUE + _ONE.repeat(n + 1)}`)), [_ZERO, _ONE])
+    : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 // Start filling the character encoding cache with values whose definitions can be derived by extracting various
 // characters from reserved words.
 // This cache is built up progressively as later entries are constructed from earlier entries
 export const charCache = {
-  "0": `(${toStr(numbers[0])})`,
-  "1": `(${toStr(numbers[1])})`,
-  "2": `(${toStr(numbers[2])})`,
-  "3": `(${toStr(numbers[3])})`,
-  "4": `(${toStr(numbers[4])})`,
-  "5": `(${toStr(numbers[5])})`,
-  "6": `(${toStr(numbers[6])})`,
-  "7": `(${toStr(numbers[7])})`,
-  "8": `(${toStr(numbers[8])})`,
-  "9": `(${toStr(numbers[9])})`,
+  "0": ENCODE_NUMBERS ? `(${toStr(numbers[0])})` : '\'0\'',
+  "1": ENCODE_NUMBERS ? `(${toStr(numbers[1])})` : '\'1\'',
+  "2": ENCODE_NUMBERS ? `(${toStr(numbers[2])})` : '\'2\'',
+  "3": ENCODE_NUMBERS ? `(${toStr(numbers[3])})` : '\'3\'',
+  "4": ENCODE_NUMBERS ? `(${toStr(numbers[4])})` : '\'4\'',
+  "5": ENCODE_NUMBERS ? `(${toStr(numbers[5])})` : '\'5\'',
+  "6": ENCODE_NUMBERS ? `(${toStr(numbers[6])})` : '\'6\'',
+  "7": ENCODE_NUMBERS ? `(${toStr(numbers[7])})` : '\'7\'',
+  "8": ENCODE_NUMBERS ? `(${toStr(numbers[8])})` : '\'8\'',
+  "9": ENCODE_NUMBERS ? `(${toStr(numbers[9])})` : '\'9\'',
 
   " ": extractCharFromObj(numbers[7]),
   "[": extractCharFromObj(numbers[0]),
