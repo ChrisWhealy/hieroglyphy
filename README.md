@@ -27,7 +27,7 @@ This form of encoding was originally considered a potential attack vector for ma
 ## Optional Number Encoding
 
 By changing the constant `ENCODE_NUMBERS` from `true` to `false`, you can elect to allow the digit characters `['0'..'9']` to be included in the encoding alphabet.
-This will reduce the size of the encoded by approximately 40%.
+This will reduce the size of the encoded output by approximately 40%.
 
 ## Usage
 
