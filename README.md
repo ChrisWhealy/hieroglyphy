@@ -6,7 +6,7 @@ I have rewritten the original functionality as an ES6 module and significantly o
 
 This app is part of the wider investigation into encoding a JavaScript statement or program using a reduced (or possibly minimal) alphabet while still remaining `eval`able and executable.
 
-[Other variations](https://github.com/aemkei/jsfuck) of this style of app exist that use a minimal alphabet, but in this particular case, a close-to-minimal alphabet has been chosen in which every character in a JavaScript program is encoded using some combination of the following 8 characters:
+[Other variations](https://github.com/aemkei/jsfuck) of this style of app exist that use a minimal alphabet, but in this particular case, a close-to-minimal alphabet has been chosen in which every character in a JavaScript program is encoded using some combination of at least the following 8 characters:
 
 * The three bracket pairs `[]`, `{}` and `()`,
 * The plus sign `+`, and
