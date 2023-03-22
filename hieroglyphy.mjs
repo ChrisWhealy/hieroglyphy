@@ -4,7 +4,7 @@ const ENCODE_NUMBERS = true
 
 const NOT = val => `!${val}`
 const asNum = val => `+${val}`
-const toNum = v => ENCODE_NUMBERS ? `+(${v})` : +eval(v)
+const toNum = ENCODE_NUMBERS ? v => `+(${v})` : v => +eval(v)
 
 const EMPTY_LIST = "[]"
 const EMPTY_OBJ = "{}"
