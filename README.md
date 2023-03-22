@@ -42,7 +42,11 @@ import {
 } from "./hieroglyphy.mjs"
 ```
 
-You can also perform simple tests in the NodeJS REPL (where `node --version` is >= 18):
+## Testing in the Node REPL
+
+You can also perform simple tests in the NodeJS REPL (where `node --version` is >= 16):
+
+With `ENCODE_NUMBERS` switched on (the default), all numbers are encoded:
 
 ```bash
 $ node
@@ -52,6 +56,8 @@ Type ".help" for more information.
 undefined
 > H.encodeNumber("1")
 '+!![]'
+> H.encodeNumber("99")
+'+((!![]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+[])+(!![]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+[]))'
 > eval(H.encodeNumber("99"))
 99
 > H.encodeString("a")
@@ -62,6 +68,33 @@ undefined
 '([]+{})[!![]+!![]+!![]+!![]+!![]]'
 > H.encodeString("abc")
 '(+{}+[])[+!![]]+([]+{})[!![]+!![]]+([]+{})[!![]+!![]+!![]+!![]+!![]]'
+> eval(H.encodeString("abc"))
+'abc'
+>
+```
+
+With `ENCODE_NUMBERS` switched off, the encoding alphabet is expanded to include the digits `[0..9]`:
+
+```bash
+$ node
+Welcome to Node.js v18.14.2.
+Type ".help" for more information.
+> let H = await import('./hieroglyphy.mjs')
+undefined
+> H.encodeNumber("1")
+1
+> H.encodeNumber("99")
+"+('9'+'9')"
+> eval(H.encodeNumber("99"))
+99
+> H.encodeString("a")
+'(+{}+[])[1]'
+> H.encodeString("b")
+'([]+{})[2]'
+> H.encodeString("c")
+'([]+{})[5]'
+> H.encodeString("abc")
+'(+{}+[])[1]+([]+{})[2]+([]+{})[5]'
 > eval(H.encodeString("abc"))
 'abc'
 >
