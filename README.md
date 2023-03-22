@@ -10,7 +10,9 @@ This app is part of the wider investigation into encoding a JavaScript statement
 
 * The three bracket pairs `[]`, `{}` and `()`,
 * The plus sign `+`, and
-* The exclamation mark `!`
+* The exclamation mark `!`, and
+* Optionally, the digits `[0..9]` can also be included.
+   By including these characters, the size of the encoded output is reduced by approximately 40%
 
 A JavaScript statement or program so encoded can be decoded using `eval`, or executed directly.
 
@@ -26,8 +28,7 @@ This form of encoding was originally considered a potential attack vector for ma
 
 ## Optional Number Encoding
 
-By changing the constant `ENCODE_NUMBERS` from `true` to `false`, you can elect to allow the digit characters `['0'..'9']` to be included in the encoding alphabet.
-This will reduce the size of the encoded output by approximately 40%.
+To include the digits `[0..9]` in the encoding alphabet, change the constant `ENCODE_NUMBERS` from `true` to `false`.
 
 ## Usage
 
